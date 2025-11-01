@@ -8,8 +8,8 @@ export default function GoogleButton({ onSuccess, onError }: any) {
   });
   return (
     <>
-      <Button className='w-full' onClick={() => login()}>
-        <i className='pi pi-google mr-2'></i>
+      <Button className="w-full" onClick={() => login()} disabled>
+        <i className="pi pi-google mr-2"></i>
         Login
       </Button>
     </>

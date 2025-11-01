@@ -42,8 +42,15 @@ const appContext = createContext<AppContextType>({
   setActiveIndex: () => {},
 });
 
+const empresa_mock = {
+  id: "1",
+  nome: "Empresa Mock",
+  ramo: "ALIMENTICIO",
+  email: "email@email.com",
+};
+
 export function AppContextProvider(props: any) {
-  const [empresa, setEmpresa] = useState<any>(null);
+  const [empresa, setEmpresa] = useState<any>(empresa_mock);
   const [sidebarVisible, setSidebarVisible] = useState<any>(true);
   const [printMode, setPrintMode] = useState<boolean>(false);
   const [banco, setBanco] = useState(null);

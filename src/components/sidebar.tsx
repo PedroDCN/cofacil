@@ -115,6 +115,7 @@ export function Sidebar({ isMenuFechado, setIsMenuFechado }: SidebarProps) {
   const navigate = useNavigate();
   const isSmallScreen = useMediaQuery("(max-width: 860px)");
 
+  console.log(session?.user);
   const mainMenuItems = getMenuItemsByRole(session?.user?.role, links as any);
 
   return (

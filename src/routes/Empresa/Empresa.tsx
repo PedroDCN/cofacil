@@ -19,6 +19,13 @@ import { toast, Toaster } from "sonner";
 import ProfileButton from "@/components/ProfileButton";
 import { EmpresaDTO } from "@/utils/types";
 
+const empresa_mock = {
+  id: "1",
+  nome: "Empresa Mock",
+  ramo: "ALIMENTICIO",
+  email: "email@email.com",
+};
+
 export default function Empresa() {
   const { empresa, setEmpresa } = useApp();
   const {
@@ -30,6 +37,7 @@ export default function Empresa() {
   const { data, refetch } = useQuery({
     queryKey: ["empresasData"],
     queryFn: getEmpresas,
+    initialData: [empresa_mock],
   });
 
   async function criarEmpresa(empresa: EmpresaDTO) {

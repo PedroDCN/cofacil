@@ -29,7 +29,7 @@ const formSchema = z.object({
 });
 
 export default function Login() {
-  const { session, login, login2 } = useAuth();
+  const { session, login, login2, loginMock } = useAuth();
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -98,6 +98,17 @@ export default function Login() {
         </div>
         <div className="w-[20rem] my-3 mx-auto">
           <GoogleButton onSuccess={handleSuccess} onError={handleError} />
+
+          <Button
+            className="w-full mt-4"
+            onClick={() => {
+              loginMock();
+              navigate("/selecao", { replace: true });
+            }}
+          >
+            Entrar
+          </Button>
+
           {/* <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <FormField

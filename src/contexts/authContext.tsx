@@ -30,6 +30,7 @@ export const authContext = createContext({
     errCallback: any
   ) => {},
   logout: (callback: VoidFunction) => {},
+  loginMock: () => {},
 });
 
 export function useAuth() {
@@ -87,6 +88,19 @@ export function AuthProvider({ children }: any) {
       api.defaults.headers.common["Authorization"] = "";
       errCallback(e);
     }
+  }
+
+  async function loginMock() {
+    setSession({
+      user: {
+        id: "1",
+        role: Role.ADMIN,
+        name: "Teste",
+        email: "teste@email.com",
+        image: "",
+      },
+      token: "",
+    });
   }
 
   async function login2(
@@ -164,7 +178,7 @@ export function AuthProvider({ children }: any) {
   return (
     <authContext.Provider
       key="auth-provider"
-      value={{ session, login, login2, logout }}
+      value={{ session, login, login2, logout, loginMock }}
     >
       {children}
     </authContext.Provider>
