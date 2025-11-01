@@ -49,12 +49,15 @@ const formSchema = z
       // )
       .refine((files) => {
         // return ["application/x-ofx"].includes(files[0]?.type);
-        return files[0]?.name.toLowerCase().endsWith(".ofx") || files[0]?.name.toLowerCase().endsWith(".csv");
+        return (
+          files[0]?.name.toLowerCase().endsWith(".ofx") ||
+          files[0]?.name.toLowerCase().endsWith(".csv")
+        );
       }, "Formato de arquivo inválido")
       .transform((files) => files?.item(0)!),
     bancoId: z.string(),
   })
-  .required({ file: true, bancoId: true });
+  .required({ bancoId: true });
 
 export default function ImportaLancamentoDialog({
   openImportSelection,

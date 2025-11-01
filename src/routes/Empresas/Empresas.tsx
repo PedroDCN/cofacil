@@ -41,7 +41,7 @@ export default function Empresas() {
           ramo: empresa.ramo || "",
         };
       }) || [],
-    data
+    data as any
   );
 
   async function criarEmpresa(empresa: EmpresaDTO) {
