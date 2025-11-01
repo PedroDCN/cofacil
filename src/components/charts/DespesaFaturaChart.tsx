@@ -1,0 +1,62 @@
+import ChartContainer from "../ChartContainer";
+import { useQuery } from "@tanstack/react-query";
+import { useChartInfo } from "../../contexts/chartcontext";
+import { getGraficoData } from "../../services/graficoService";
+import { TwoColumnBarChart } from "../genericCharts/TwoColumnBarChart";
+import { moneyFormatter } from "../../utils/moneyUtil";
+import { useApp } from "../../contexts/appContext";
+import { Spinner } from "../ui/spinner";
+import { useMemo } from "react";
+import { SettingsIcon } from "lucide-react";
+
+let chartData: any;
+
+export default function DespesaFaturaChart(props: any) {
+  const { timeContext } = useChartInfo();
+  const { empresa } = useApp();
+
+  const { isLoading, data, error } = useQuery({
+    queryKey: ["despesaFaturaData", timeContext, empresa, props.banco],
+    queryFn: async () =>
+      getGraficoData("/graficos/visao-geral", {
+        empresa,
+        timeContext,
+        banco: props.banco,
+      }),
+  });
+
+  chartData = useMemo(() => {
+    return data ?? (chartData || []);
+  }, [data]);
+
+  return (
+    <ChartContainer className={props.className}>
+      {error ? (
+        <>
+          <p>
+            Erro ao carregar o gráfico:
+            <br />
+            {/* @ts-ignore  */}
+            {error?.message}
+          </p>
+          <SettingsIcon className='mt-4 w-16 h-16 animate-spin' />
+        </>
+      ) : (
+        <>
+          <h3 className='w-full text-center font-semibold text-lg'>
+            Despesas e Vendas
+          </h3>
+          <h4>Lucro: {moneyFormatter(chartData.lucro)}</h4>
+          <div className='w-[350px] h-[250px] flex justify-center items-center'>
+            <TwoColumnBarChart label={["Entrada", "Saída"]} data={chartData} />
+          </div>
+          {isLoading && (
+            <div className='absolute top-0 left-0 right-0 bottom-0 bg-slate-800/10 flex items-center justify-center'>
+              <Spinner size='large' className='mt-4' />
+            </div>
+          )}
+        </>
+      )}
+    </ChartContainer>
+  );
+}

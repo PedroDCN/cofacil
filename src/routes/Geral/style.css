@@ -1,0 +1,8 @@
+.p-calendar {
+  max-width: 110px;
+}
+
+.calendar-element .p-inputtext {
+  border: transparent;
+  text-align: center;
+}
